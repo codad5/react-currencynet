@@ -8,6 +8,7 @@
     "module": "esnext",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
+    "target":"es6",
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./src",
@@ -22,5 +23,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    
   }
 }
