@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import currencySet from './currencyset.json'
+import { setCookie, getCookie } from './cookie'
 
 type currencyCode =
   | (string & 'AFA')
@@ -335,6 +336,7 @@ const countryCodes: string[] = [
 interface ExampleProps extends React.HTMLAttributes<HTMLDivElement> {
   buildCurrency: currencyCode
   value: number
+  isfloat?: boolean
 }
 
 export default function CurrencyNet(props: ExampleProps) {
@@ -343,44 +345,60 @@ export default function CurrencyNet(props: ExampleProps) {
   const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
   const symbols = currencySet[clientCurrency].symbol
   const value: number = props.value
+  const isfloat = props.isfloat || true
 
   const fetchUserLoaction = () => {
-    if (!navigator.geolocation) {
-      return false
-    }
     return fetch(`https://ipapi.co/json/`)
       .then((res) => res.json())
       .then((res) => {
-        setClientCurrency(res.currency)
+        // console.log(res.currency)
+        // setClientCurrency(res.currency)
+        return res.currency
       })
       .catch((err) => {
         console.log(err)
+        return false
       })
   }
   const getRate = () => {
     // fetch data from https://localhost then return the data
-    return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${buildCurrency}/${clientCurrency}`)
+    // if (localStorage.getItem(clientCurrency)) {
+    if (getCookie(`${clientCurrency}_${buildCurrency}`)) {
+      return new Promise((resolve) => {
+        return resolve(getCookie(`${clientCurrency}_${buildCurrency}`))
+      })
+    }
+    return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${buildCurrency}/${clientCurrency}/`)
       .then((res) => res.json())
       .then((res) => {
-        setRate(res.conversion_rate)
+        // console.log(res.conversion_rate)
+        // setRate(res.conversion_rate)
+        // localStorage.setItem(clientCurrency, res.conversion_rate)
+        setCookie(`${clientCurrency}_${buildCurrency}`, res.conversion_rate, 1)
+        return res.conversion_rate
       })
       .catch((err) => {
         console.log(err)
+        return false
       })
   }
 
-  useEffect(() => {
-    try {
-      fetchUserLoaction()
-
-      getRate()
-    } catch (error) {
-      console.log(error)
-    }
-  }, [props])
+  try {
+    fetchUserLoaction().then((currency) => {
+      getRate().then((rate) => {
+        // console.log(rate)
+        if (rate && currency) {
+          setRate(rate)
+          setClientCurrency(currency)
+        }
+      })
+    })
+  } catch (error) {
+    console.log(error)
+  }
   return (
     <span>
-      {symbols} {Number(value) * Number(rate)}
+      {symbols} {isfloat ? Number(value * rate).toFixed(2) : Math.trunc(Math.round(Number(value * rate)))}
     </span>
   )
 }
