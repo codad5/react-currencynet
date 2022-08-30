@@ -1,6 +1,6 @@
 {
   "name": "currencynet",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "A simple currency manager for the net project",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -29,8 +29,8 @@
   "author": "Chibueze Aniezeofor (codad5)",
   "license": "ISC",
   "repository": {
-  "type": "git",
-  "url": "git+https://github.com/codad5/currencynet-package.git"
+    "type": "git",
+    "url": "git+https://github.com/codad5/currencynet-package.git"
   },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
@@ -54,7 +54,7 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-  "react": ">=16"
+    "react": ">=16"
   },
   "files": [
     "dist",
