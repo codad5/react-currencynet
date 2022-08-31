@@ -13,6 +13,12 @@
 npm i currencynet
 ```
 
+or
+
+```bash
+yarn add currencynet
+```
+
 ### Import Currencynet
 
  Create a new currencyNet Object
@@ -21,65 +27,61 @@ npm i currencynet
     import { CurrencyNet } from 'currencynet'
 ```
 
-`NGN` - This can be replaced by any of [ISO 4217 CODE](https://en.wikipedia.org/wiki/ISO_4217) based on the currency used in building your application
+Now add your the `CurrencyNet` jsx element
 
-Now add your the `currencynet-init` className to the desired element
-
-```js
-<span class="currencynet-init"></span>
+```jsx
+<CurrencyNet buildCurrency="USD" value={10} isfloat={false} />
 ```
 
-### Declare your element Value(data)
+`buildCurrency` - This can be replaced by any of [ISO 4217 CODE](https://en.wikipedia.org/wiki/ISO_4217) based on the currency used in that element
 
-```html
-<span class="currencynet-init" data-currencynet-value="345"></span>
-```
+`value` - This is the value of the element in your build currency
 
-###### You can also set (change) the currency data for a particular element
+`isfloat` - (optional) - This is an optional parameter that determine if the currency should be returned as a float or not , `default` is true
 
-> This is important if you want to show the difference between two currency
+### Using it in a Component
 
-> For this example i have changing the currency to `India rupee`
+As seen we will always have to redeclare the `buildCurrency` when using it in a component which can be very exhausting , so for best pratice you can create a default component to be used through out your application
 
-```html
-<span class="currencynet-init-inr" data-currencynet-value="345"></span>
+```jsx
+import React from 'react'
+import {CurrencyNet} from 'currencynet'
+
+//Using props
+const MyDollarCurrency = (props) => {
+    return (
+        <CurrencyNet buildCurrency="USD" value={props.value} />
+    )
+}
+// Using Children
+const MyEuroCurrency = ({children}) => {
+    return (
+        <CurrencyNet buildCurrency="EUR" value={Number(children)} />
+    )
+}
+export default const App = () => {
+    return (
+        <div class="App">
+            <MyDollarCurrency value={10} />
+            <MyEuroCurrency>
+                10
+            </MyEuroCurrency>
+        </div>
+
+    )
+}
 ```
 
 ### Adding a dropdown option
 
 ```html
-<select class="currencynet-select">
-    <option name="USD" id="">USD</option>
-    <option name="NGN" id="">NGN</option>
-    <option name="EUR" id="">EUR</option>
-    <option name="INR" id="">INR</option>
-</select>
+coming soon
 ```
-
-> NOTE: use the className `currencynet-select` for the drop down menu
-
-### changing the data type of your output
-
-You can change the data type of your output from `float` to `int` by adding this few code at the bottom of your html code
-
-###### To return a float data type
-
-```html
-</body>
-<script>
-    // this will make the output a float of 2 decimal plcae `2.00` on true else a Integer `2` 
-    currencyChange.float(true); 
-    
-</script>
-```
-
-- `float` method : this will make the output a float of 2 decimal plcae `2.00` on true else a Integer `2`
 
 ### Table for all avaliable currency class
 
 | COUNTRY | ISO 4217 CODE | CLASSNAME |
 | :---: | :---:| :---|
-|Your Build Country | NULL | currencynet-init |
 | US Dollar | USD | currencynet-init-usd |
 | Indian Rupee | INR | currencynet-init-inr |
 | Euro  | EUR | currencynet-init-eur |
