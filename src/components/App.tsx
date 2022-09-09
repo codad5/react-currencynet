@@ -341,10 +341,10 @@ interface ExampleProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function CurrencyNet(props: ExampleProps) {
   const buildCurrency: currencyCode = countryCodes.includes(props.buildCurrency) ? props.buildCurrency : 'USD'
-  const [rate, setRate] = useState(1)
-  const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
+  // const [rate, setRate] = useState(1)
+  // const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
   const [clientDisplay, setClientDisplay] = useState({currency:props.buildCurrency, rate:1, symbol:currencySet[props.buildCurrency].symbol})
-  const symbols = currencySet[clientCurrency].symbol
+  // const symbols = currencySet[clientCurrency].symbol
   const value: number = props.value
   const isfloat = props.isfloat || true
 
@@ -364,18 +364,18 @@ export default function CurrencyNet(props: ExampleProps) {
   const getRate = () => {
     // fetch data from https://localhost then return the data
     // if (localStorage.getItem(clientCurrency)) {
-    if (getCookie(`${clientCurrency}_${buildCurrency}`)) {
+    if (getCookie(`${clientDisplay.currency}_${buildCurrency}`)) {
       return new Promise((resolve) => {
-        return resolve(getCookie(`${clientCurrency}_${buildCurrency}`))
+        return resolve(getCookie(`${clientDisplay.currency}_${buildCurrency}`))
       })
     }
-    return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${buildCurrency}/${clientCurrency}/`)
+    return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${buildCurrency}/${clientDisplay.currency}/`)
       .then((res) => res.json())
       .then((res) => {
         // console.log(res.conversion_rate)
         // setRate(res.conversion_rate)
         // localStorage.setItem(clientCurrency, res.conversion_rate)
-        setCookie(`${clientCurrency}_${buildCurrency}`, res.conversion_rate, 1)
+        setCookie(`${clientDisplay.currency}_${buildCurrency}`, res.conversion_rate, 1)
         return res.conversion_rate
       })
       .catch((err) => {
