@@ -5,6 +5,12 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
+  "author": "Chibueze Aniezeofor (codad5)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codad5/currencynet-package.git"
+  },
   "scripts": {
     "test": "jest --config jestconfig.json",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
@@ -26,12 +32,6 @@
     "currency converter",
     "currency converter react"
   ],
-  "author": "Chibueze Aniezeofor (codad5)",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codad5/currencynet-package.git"
-  },
   "devDependencies": {
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.7",
