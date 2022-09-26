@@ -408,9 +408,7 @@ export default function CurrencyNet(props: ExampleProps) {
   return (
     <span>
       {clientDisplay.symbol}{' '}
-      {isfloat
-        ? Number(value * clientDisplay.rate).toFixed(2)
-        : Math.trunc(Math.round(Number(value * clientDisplay.value)))}
+      {isfloat ? Number(value * clientDisplay.rate).toFixed(2) : Math.trunc(Math.round(Number(clientDisplay.value)))}
     </span>
   )
 }
