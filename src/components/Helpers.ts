@@ -67,3 +67,21 @@ export const shorten_number = (number: number, float = 2): string => {
   //     return number.toString()
   // }
 }
+
+export const output_display = (
+  clientDisplay: { currency: currencyCode; rate: number; symbol: string; value: number },
+  value: number,
+  isfloat = true,
+  shortenCurrency = true,
+) => {
+  const return_value = `${clientDisplay.symbol} ${
+    isfloat
+      ? shortenCurrency
+        ? shorten_number(clientDisplay.value)
+        : Number(value * clientDisplay.rate).toFixed(2)
+      : shortenCurrency
+      ? shorten_number(Math.trunc(Math.round(Number(clientDisplay.value))), 0)
+      : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
+  }`
+  return return_value
+}

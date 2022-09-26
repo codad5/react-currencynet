@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import currencySet from './currencyset.json'
 import { currencyCode } from './types'
 import { countryCodes } from './assets'
-import { fetchUserLoaction, getRate, shorten_number } from './Helpers'
+import { fetchUserLoaction, getRate, output_display } from './Helpers'
 
 interface ExampleProps extends React.HTMLAttributes<HTMLDivElement> {
   buildCurrency: currencyCode
@@ -43,17 +43,5 @@ export default function CurrencyNet(props: ExampleProps) {
     console.log(error)
   }
 
-  const output_display = (clientDisplay: { currency: currencyCode; rate: number; symbol: string; value: number }) => {
-    const return_value = `${clientDisplay.symbol} ${
-      isfloat
-        ? shortenCurrency
-          ? shorten_number(clientDisplay.value)
-          : Number(value * clientDisplay.rate).toFixed(2)
-        : shortenCurrency
-        ? shorten_number(Math.trunc(Math.round(Number(clientDisplay.value))), 0)
-        : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
-    }`
-    return return_value
-  }
-  return <span>{output_display(clientDisplay)}</span>
+  return <span>{output_display(clientDisplay, value, isfloat, shortenCurrency)}</span>
 }
