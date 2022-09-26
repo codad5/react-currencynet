@@ -343,12 +343,16 @@ export default function CurrencyNet(props: ExampleProps) {
   const buildCurrency: currencyCode = countryCodes.includes(props.buildCurrency) ? props.buildCurrency : 'USD'
   // const [rate, setRate] = useState(1)
   // const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
-  const [clientDisplay, setClientDisplay] = useState({currency:props.buildCurrency, rate:1, symbol:currencySet[props.buildCurrency].symbol})
+  const [clientDisplay, setClientDisplay] = useState({
+    currency: props.buildCurrency,
+    rate: 1,
+    symbol: currencySet[props.buildCurrency].symbol,
+  })
   // const symbols = currencySet[clientCurrency].symbol
   const value: number = props.value
   const isfloat = props.isfloat || true
 
-  const fetchUserLoaction = () : Promise<currencyCode>  => {
+  const fetchUserLoaction = (): Promise<currencyCode> => {
     return fetch(`https://ipapi.co/json/`)
       .then((res) => res.json())
       .then((res) => {
@@ -391,7 +395,7 @@ export default function CurrencyNet(props: ExampleProps) {
         if (rate && currency) {
           // setRate(rate)
           // setClientCurrency(currency)
-          setClientDisplay({currency:currency, rate:rate, symbol:currencySet[currency].symbol})
+          setClientDisplay({ currency: currency, rate: rate, symbol: currencySet[currency].symbol })
         }
       })
     })
@@ -400,7 +404,10 @@ export default function CurrencyNet(props: ExampleProps) {
   }
   return (
     <span>
-      {clientDisplay.symbol} {isfloat ? Number(value * clientDisplay.rate).toFixed(2) : Math.trunc(Math.round(Number(value * clientDisplay.rate)))}
+      {clientDisplay.symbol}{' '}
+      {isfloat
+        ? Number(value * clientDisplay.rate).toFixed(2)
+        : Math.trunc(Math.round(Number(value * clientDisplay.rate)))}
     </span>
   )
 }

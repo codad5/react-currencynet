@@ -1,4 +1,5 @@
 {
+  "name": "currencynet react",
   "transform": {
     "^.+\\.(t|j)sx?$": "ts-jest"
   },
