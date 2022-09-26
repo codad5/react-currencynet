@@ -347,6 +347,7 @@ export default function CurrencyNet(props: ExampleProps) {
     currency: props.buildCurrency,
     rate: 1,
     symbol: currencySet[props.buildCurrency].symbol,
+    value: props.value,
   })
   // const symbols = currencySet[clientCurrency].symbol
   const value: number = props.value
@@ -395,7 +396,9 @@ export default function CurrencyNet(props: ExampleProps) {
         if (rate && currency) {
           // setRate(rate)
           // setClientCurrency(currency)
-          setClientDisplay({ currency: currency, rate: rate, symbol: currencySet[currency].symbol })
+          setClientDisplay((prev) => {
+            return { currency: currency, rate: rate, symbol: currencySet[currency].symbol, value: rate * prev.value }
+          })
         }
       })
     })
@@ -407,7 +410,7 @@ export default function CurrencyNet(props: ExampleProps) {
       {clientDisplay.symbol}{' '}
       {isfloat
         ? Number(value * clientDisplay.rate).toFixed(2)
-        : Math.trunc(Math.round(Number(value * clientDisplay.rate)))}
+        : Math.trunc(Math.round(Number(value * clientDisplay.value)))}
     </span>
   )
 }
