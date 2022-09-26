@@ -1,6 +1,6 @@
 {
   "name": "currencynet",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A simple currency manager for the net project",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
