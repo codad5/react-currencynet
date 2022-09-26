@@ -1,7 +1,7 @@
 
 # CUURENCYNET REACT VERSION
 
-> Currencynet is a javascript light framework that helps to convert currency between different html tags
+> Currencynet is a javascript light library that helps to convert currency between different html tags
 
 <br/>
 

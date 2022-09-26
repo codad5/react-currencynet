@@ -337,6 +337,7 @@ interface ExampleProps extends React.HTMLAttributes<HTMLDivElement> {
   buildCurrency: currencyCode
   value: number
   isfloat?: boolean
+  shortenCurrency?: boolean
 }
 
 export default function CurrencyNet(props: ExampleProps) {
@@ -351,7 +352,8 @@ export default function CurrencyNet(props: ExampleProps) {
   })
   // const symbols = currencySet[clientCurrency].symbol
   const value: number = props.value
-  const isfloat = props.isfloat || true
+  const isfloat = props.isfloat || true,
+    shortenCurrency = props.shortenCurrency || false
 
   const fetchUserLoaction = (): Promise<currencyCode> => {
     return fetch(`https://ipapi.co/json/`)
@@ -405,10 +407,27 @@ export default function CurrencyNet(props: ExampleProps) {
   } catch (error) {
     console.log(error)
   }
+
+  const shorten_number = (number: number): string => {
+    switch (true) {
+      case number >= 1000000000:
+        return (number / 1000000000).toFixed(1) + 'B'
+      case number >= 1000000:
+        return (number / 1000000).toFixed(1) + 'M'
+      case number >= 1000:
+        return (number / 1000).toFixed(1) + 'K'
+      default:
+        return number.toString()
+    }
+  }
   const output_display = (clientDisplay: { currency: currencyCode; rate: number; symbol: string; value: number }) => {
     const return_value = `${clientDisplay.symbol} ${
       isfloat
-        ? Number(value * clientDisplay.rate).toFixed(2)
+        ? shortenCurrency
+          ? shorten_number(clientDisplay.value)
+          : Number(value * clientDisplay.rate).toFixed(2)
+        : shortenCurrency
+        ? shorten_number(Math.trunc(Math.round(Number(clientDisplay.value))))
         : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
     }`
     return return_value
