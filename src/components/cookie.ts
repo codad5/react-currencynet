@@ -5,7 +5,7 @@ const setCookie = (name: string, value: string, days = 1) => {
 }
 // code to get cookie from browser
 
-const getCookie = (name: string) => {
+const getCookie = (name: string): string => {
   const nameLen = name.length + 1
   const cookie = document.cookie.split(';')
   for (let i = 0; i < cookie.length; i++) {
@@ -14,7 +14,7 @@ const getCookie = (name: string) => {
       return c.substring(nameLen, c.length)
     }
   }
-  return false
+  return ''
 }
 // code to delete cookie from browser
 const deleteCookie = (name: string) => {

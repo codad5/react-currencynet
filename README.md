@@ -3,8 +3,6 @@
 
 > Currencynet is a javascript light library that helps to convert currency between different html tags
 
-<br/>
-
 ## Documentation : Usage
 
 ### Installing Currencynet
@@ -73,12 +71,14 @@ export default const App = () => {
     )
 }
 ```
+
 # New Currency Formatter
+
 ```jsx
 <CurrencyNet buildCurrency="USD" value={10} isfloat={false} shortenCurrency={true}/>
 ```
 
-### Adding a dropdown option
+## Adding a dropdown option
 
 ```html
 coming soon
