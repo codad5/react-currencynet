@@ -405,10 +405,13 @@ export default function CurrencyNet(props: ExampleProps) {
   } catch (error) {
     console.log(error)
   }
-  const me = `${
-    clientDisplay.symbol + isfloat
-      ? Number(value * clientDisplay.rate).toFixed(2)
-      : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
-  }`
-  return <span>{me}</span>
+  const output_display = (clientDisplay: { currency?: currencyCode; rate: any; symbol: any; value?: number }) => {
+    const return_value = `${
+      clientDisplay.symbol + isfloat
+        ? Number(value * clientDisplay.rate).toFixed(2)
+        : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
+    }`
+    return return_value
+  }
+  return <span>{output_display(clientDisplay)}</span>
 }
