@@ -406,8 +406,8 @@ export default function CurrencyNet(props: ExampleProps) {
     console.log(error)
   }
   const output_display = (clientDisplay: { currency: currencyCode; rate: number; symbol: string; value: number }) => {
-    const return_value = `${
-      clientDisplay.symbol + isfloat
+    const return_value = `${clientDisplay.symbol} ${
+      isfloat
         ? Number(value * clientDisplay.rate).toFixed(2)
         : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
     }`
