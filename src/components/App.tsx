@@ -356,17 +356,20 @@ export default function CurrencyNet(props: ExampleProps) {
     shortenCurrency = props.shortenCurrency || false
 
   const fetchUserLoaction = (): Promise<currencyCode> => {
-    return fetch(`https://ipapi.co/json/`)
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res.currency)
-        // setClientCurrency(res.currency)
-        return res.currency
-      })
-      .catch((err) => {
-        console.log(err)
-        return false
-      })
+    return getCookie('userLocation')
+      ? Promise.resolve(getCookie('userLocation'))
+      : fetch(`https://ipapi.co/json/`)
+          .then((res) => res.json())
+          .then((res) => {
+            // console.log(res.currency)
+            // setClientCurrency(res.currency)
+            setCookie('userLocation', res.currency, 1)
+            return res.currency
+          })
+          .catch((err) => {
+            console.log(err)
+            return 'USD'
+          })
   }
   const getRate = () => {
     // fetch data from https://localhost then return the data
@@ -409,16 +412,30 @@ export default function CurrencyNet(props: ExampleProps) {
   }
 
   const shorten_number = (number: number): string => {
-    switch (true) {
-      case number >= 1000000000:
-        return (number / 1000000000).toFixed(1) + 'B'
-      case number >= 1000000:
-        return (number / 1000000).toFixed(1) + 'M'
-      case number >= 1000:
-        return (number / 1000).toFixed(1) + 'K'
-      default:
-        return number.toString()
+    if (number < 1000) {
+      return number.toString()
     }
+    if (number < 1000000) {
+      return (number / 1000).toFixed(1) + 'K'
+    }
+    if (number < 1000000000) {
+      return (number / 1000000).toFixed(1) + 'M'
+    }
+    if (number < 1000000000000) {
+      return (number / 1000000000).toFixed(1) + 'B'
+    }
+    return (number / 1000000000000).toFixed(1) + 'T'
+  
+    // switch (true) {
+    //   case number >= 1000000000:
+    //     return (number / 1000000000).toFixed(1) + 'B'
+    //   case number >= 1000000:
+    //     return (number / 1000000).toFixed(1) + 'M'
+    //   case number >= 1000:
+    //     return (number / 1000).toFixed(1) + 'K'
+    //   default:
+    //     return number.toString()
+    // }
   }
   const output_display = (clientDisplay: { currency: currencyCode; rate: number; symbol: string; value: number }) => {
     const return_value = `${clientDisplay.symbol} ${

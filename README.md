@@ -24,13 +24,13 @@ yarn add currencynet
  Create a new currencyNet Object
 
 ```js
-    import { CurrencyNet } from 'currencynet'
+import { CurrencyNet } from 'currencynet'
 ```
 
 Now add your the `CurrencyNet` jsx element
 
 ```jsx
-<CurrencyNet buildCurrency="USD" value={10} isfloat={false} />
+<CurrencyNet buildCurrency="USD" value={10} isfloat={false} shortenCurrency={true} />
 ```
 
 `buildCurrency` - This can be replaced by any of [ISO 4217 CODE](https://en.wikipedia.org/wiki/ISO_4217) based on the currency used in that element
@@ -38,6 +38,8 @@ Now add your the `CurrencyNet` jsx element
 `value` - This is the value of the element in your build currency
 
 `isfloat` - (optional) - This is an optional parameter that determine if the currency should be returned as a float or not , `default` is true
+
+`shortenCurrency` - (optional) - This is an optional param for formatting currencies in shorten form e.g `$1200` becomes `$1.2k`
 
 ### Using it in a Component
 
@@ -70,6 +72,10 @@ export default const App = () => {
 
     )
 }
+```
+# New Currency Formatter
+```jsx
+<CurrencyNet buildCurrency="USD" value={10} isfloat={false} shortenCurrency={true}/>
 ```
 
 ### Adding a dropdown option
