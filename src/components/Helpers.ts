@@ -55,17 +55,6 @@ export const shorten_number = (number: number, float = 2): string => {
     return (number / 1000000000).toFixed(float) + 'B'
   }
   return (number / 1000000000000).toFixed(float) + 'T'
-
-  // switch (true) {
-  //   case number >= 1000000000:
-  //     return (number / 1000000000).toFixed(1) + 'B'
-  //   case number >= 1000000:
-  //     return (number / 1000000).toFixed(1) + 'M'
-  //   case number >= 1000:
-  //     return (number / 1000).toFixed(1) + 'K'
-  //   default:
-  //     return number.toString()
-  // }
 }
 
 export const output_display = (
@@ -77,10 +66,10 @@ export const output_display = (
   const return_value = `${clientDisplay.symbol} ${
     isfloat
       ? shortenCurrency
-        ? shorten_number(clientDisplay.value)
+        ? shorten_number(value)
         : Number(value * clientDisplay.rate).toFixed(2)
       : shortenCurrency
-      ? shorten_number(Math.trunc(Math.round(Number(clientDisplay.value))), 0)
+      ? shorten_number(Math.trunc(Math.round(Number(value))), 0)
       : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
   }`
   return return_value
