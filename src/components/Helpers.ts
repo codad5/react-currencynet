@@ -66,10 +66,10 @@ export const output_display = (
   const return_value = `${clientDisplay.symbol} ${
     isfloat
       ? shortenCurrency
-        ? shorten_number(value)
+        ? shorten_number(value * clientDisplay.rate)
         : Number(value * clientDisplay.rate).toFixed(2)
       : shortenCurrency
-      ? shorten_number(Math.trunc(Math.round(Number(value))), 0)
+      ? shorten_number(Math.trunc(Math.round(Number(value * clientDisplay.rate))), 0)
       : Math.trunc(Math.round(Number(value * clientDisplay.rate)))
   }`
   return return_value
