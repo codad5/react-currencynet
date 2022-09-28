@@ -17,22 +17,22 @@ export const fetchUserLoaction = (): Promise<currencyCode> => {
           return 'USD'
         })
 }
-export const getRate = (clientDisplay: { currency: currencyCode }, buildCurrency: currencyCode): Promise<number> => {
+export const getRate = (from: currencyCode, to: currencyCode): Promise<number> => {
   // fetch data from https://localhost then return the data
   // if (localStorage.getItem(clientCurrency)) {
-  const data: number = parseInt(getCookie(`${clientDisplay.currency}_${buildCurrency}`))
-  if (getCookie(`${clientDisplay.currency}_${buildCurrency}`) !== '') {
+  const data: number = parseInt(getCookie(`${to}_${from}`))
+  if (getCookie(`${to}_${from}`) !== '') {
     return new Promise((resolve) => {
       return resolve(data)
     })
   }
-  return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${buildCurrency}/${clientDisplay.currency}/`)
+  return fetch(`https://lovely-puce-shoulder-pads.cyclic.app/${from}/${to}/`)
     .then((res) => res.json())
     .then((res) => {
       // console.log(res.conversion_rate)
       // setRate(res.conversion_rate)
       // localStorage.setItem(clientCurrency, res.conversion_rate)
-      setCookie(`${clientDisplay.currency}_${buildCurrency}`, res.conversion_rate, 1)
+      setCookie(`${to}_${from}`, res.conversion_rate, 1)
       return res.conversion_rate
     })
     .catch((err) => {

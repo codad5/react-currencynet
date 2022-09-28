@@ -10,6 +10,13 @@ interface CurrencyNetProps extends React.HTMLAttributes<HTMLDivElement> {
   isfloat?: boolean
   shortenCurrency?: boolean
 }
+interface ConverterProps extends React.HTMLAttributes<HTMLDivElement> {
+  from: currencyCode
+  to: currencyCode
+  value: number
+  isfloat?: boolean
+  shortenCurrency?: boolean
+}
 interface NumberShortenerProps extends React.HTMLAttributes<HTMLDivElement> {
   value: number
   isfloat?: boolean
@@ -33,13 +40,13 @@ export function CurrencyNet(props: CurrencyNetProps) {
 
   try {
     fetchUserLoaction().then((currency) => {
-      getRate(clientDisplay, buildCurrency).then((rate) => {
+      getRate(buildCurrency, clientDisplay.currency).then((rate) => {
         // console.log(rate)
         if (rate && currency) {
           // setRate(rate)
           // setClientCurrency(currency)
-          setClientDisplay((prev) => {
-            return { currency: currency, rate: rate, symbol: currencySet[currency].symbol, value: rate * prev.value }
+          setClientDisplay(() => {
+            return { currency: currency, rate: rate, symbol: currencySet[currency].symbol, value: rate * props.value }
           })
         }
       })
@@ -50,7 +57,40 @@ export function CurrencyNet(props: CurrencyNetProps) {
 
   return <span>{output_display(clientDisplay, value, isfloat, shortenCurrency)}</span>
 }
+export function CurrencyConverter(props: ConverterProps) {
+  const buildCurrency: currencyCode = countryCodes.includes(props.from) ? props.from : 'USD'
+  // const [rate, setRate] = useState(1)
+  // const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
+  const [clientDisplay, setClientDisplay] = useState({
+    currency: props.from,
+    rate: 1,
+    symbol: currencySet[props.from].symbol,
+    value: props.value,
+  })
+  // const symbols = currencySet[clientCurrency].symbol
+  const value: number = props.value
+  const isfloat = props.isfloat ?? true,
+    shortenCurrency = props.shortenCurrency ?? false
 
+  try {
+    // fetchUserLoaction().then((currency) => {
+    getRate(buildCurrency, props.to).then((rate) => {
+      // console.log(rate)
+      if (rate && props.to) {
+        // setRate(rate)
+        // setClientCurrency(currency)
+        setClientDisplay((prev) => {
+          return { currency: props.to, rate: rate, symbol: currencySet[props.to].symbol, value: rate * prev.value }
+        })
+      }
+    })
+    // })
+  } catch (error) {
+    console.log(error)
+  }
+
+  return <span>{output_display(clientDisplay, value, isfloat, shortenCurrency)}</span>
+}
 export function NumberShortener(props: NumberShortenerProps) {
   const value: number = props.value
   const precision = props.precision ?? 2

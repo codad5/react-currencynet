@@ -1,3 +1,3 @@
-import { CurrencyNet, NumberShortener } from './components/App'
+import { CurrencyNet, NumberShortener, CurrencyConverter } from './components/App'
 
-export { CurrencyNet, NumberShortener }
+export { CurrencyNet, NumberShortener, CurrencyConverter }
