@@ -45,16 +45,21 @@ export const shorten_number = (number: number, float = 2): string => {
   if (number < 1000) {
     return number.toString()
   }
+  let value: number = number
+  let suffix = ''
   if (number < 1000000) {
-    return (number / 1000).toFixed(float) + 'K'
+    value = number / 1000
+    suffix = 'K'
+  } else if (number < 1000000000) {
+    value = number / 1000000
+    suffix = 'M'
+  } else if (number < 1000000000000) {
+    value = number / 1000000000
+    suffix = 'B'
+  } else {
+    return (number / 1000000000000).toFixed(float) + 'T'
   }
-  if (number < 1000000000) {
-    return (number / 1000000).toFixed(float) + 'M'
-  }
-  if (number < 1000000000000) {
-    return (number / 1000000000).toFixed(float) + 'B'
-  }
-  return (number / 1000000000000).toFixed(float) + 'T'
+  return float > 0 ? value.toFixed(float) + suffix : Math.round(value) + suffix
 }
 
 export const output_display = (

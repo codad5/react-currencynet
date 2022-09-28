@@ -2,16 +2,21 @@ import React, { useState } from 'react'
 import currencySet from './currencyset.json'
 import { currencyCode } from './types'
 import { countryCodes } from './assets'
-import { fetchUserLoaction, getRate, output_display } from './Helpers'
+import { fetchUserLoaction, getRate, output_display, shorten_number } from './Helpers'
 
-interface ExampleProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CurrencyNetProps extends React.HTMLAttributes<HTMLDivElement> {
   buildCurrency: currencyCode
   value: number
   isfloat?: boolean
   shortenCurrency?: boolean
 }
+interface NumberShortenerProps extends React.HTMLAttributes<HTMLDivElement> {
+  value: number
+  isfloat?: boolean
+  precision?: number
+}
 
-export default function CurrencyNet(props: ExampleProps) {
+export function CurrencyNet(props: CurrencyNetProps) {
   const buildCurrency: currencyCode = countryCodes.includes(props.buildCurrency) ? props.buildCurrency : 'USD'
   // const [rate, setRate] = useState(1)
   // const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
@@ -44,4 +49,12 @@ export default function CurrencyNet(props: ExampleProps) {
   }
 
   return <span>{output_display(clientDisplay, value, isfloat, shortenCurrency)}</span>
+}
+
+export function NumberShortener(props: NumberShortenerProps) {
+  const value: number = props.value
+  const precision = props.precision ?? 2
+  const float: number = props.isfloat ? precision : 0
+
+  return <span>{shorten_number(value, float)}</span>
 }
