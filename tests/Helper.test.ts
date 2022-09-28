@@ -19,5 +19,5 @@ test('Output to workfine', () => {
       false,
       true,
     ),
-  ).toBe('$ 1M')
+  ).toBe('$1M')
 })

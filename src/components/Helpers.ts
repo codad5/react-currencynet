@@ -1,7 +1,7 @@
 import { setCookie, getCookie } from './cookie'
 import { currencyCode } from './types'
 
-export const fetchUserLoaction = (): Promise<currencyCode> => {
+export const fetchUserLoactionCurrencyCode = (): Promise<currencyCode> => {
   return getCookie('userLocation')
     ? Promise.resolve(getCookie('userLocation'))
     : fetch(`https://ipapi.co/json/`)
@@ -68,7 +68,7 @@ export const output_display = (
   isfloat = true,
   shortenCurrency = true,
 ) => {
-  const return_value = `${clientDisplay.symbol} ${
+  const return_value = `${clientDisplay.symbol}${
     isfloat
       ? shortenCurrency
         ? shorten_number(value * clientDisplay.rate)

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import currencySet from './currencyset.json'
 import { currencyCode } from './types'
 import { countryCodes } from './assets'
-import { fetchUserLoaction, getRate, output_display, shorten_number } from './Helpers'
+import { fetchUserLoactionCurrencyCode, getRate, output_display, shorten_number } from './Helpers'
 
 interface CurrencyNetProps extends React.HTMLAttributes<HTMLDivElement> {
   buildCurrency: currencyCode
@@ -39,7 +39,7 @@ export function CurrencyNet(props: CurrencyNetProps) {
     shortenCurrency = props.shortenCurrency ?? false
 
   try {
-    fetchUserLoaction().then((currency) => {
+    fetchUserLoactionCurrencyCode().then((currency) => {
       getRate(buildCurrency, clientDisplay.currency).then((rate) => {
         // console.log(rate)
         if (rate && currency) {
@@ -59,6 +59,7 @@ export function CurrencyNet(props: CurrencyNetProps) {
 }
 export function CurrencyConverter(props: ConverterProps) {
   const buildCurrency: currencyCode = countryCodes.includes(props.from) ? props.from : 'USD'
+  const ClientCurrency: currencyCode = countryCodes.includes(props.to) ? props.to : 'USD'
   // const [rate, setRate] = useState(1)
   // const [clientCurrency, setClientCurrency] = useState(props.buildCurrency)
   const [clientDisplay, setClientDisplay] = useState({
@@ -76,7 +77,7 @@ export function CurrencyConverter(props: ConverterProps) {
     // fetchUserLoaction().then((currency) => {
     getRate(buildCurrency, props.to).then((rate) => {
       // console.log(rate)
-      if (rate && props.to) {
+      if (rate && ClientCurrency) {
         // setRate(rate)
         // setClientCurrency(currency)
         setClientDisplay((prev) => {
